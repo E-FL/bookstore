@@ -1,10 +1,14 @@
 /**
  * Base collector for Google books
+ *
+ * TODO now that I think of it, this collector is the controller, it should not hold the data, only functions
+ * TODO add a model, rename classes to controller instead of collector
  */
 import ICollector from "./ICollector";
-import IBook from "../types/IBook";
+import {BookList} from "../types/BookList";
 
 const BASE_URL = 'https://www.googleapis.com/books/v1/volumes';
+const MAX_ALLOWED_RESULTS = 40; // this is from Google's API
 
 export class CollectorGoogle implements ICollector {
     source_url: string;
@@ -13,32 +17,26 @@ export class CollectorGoogle implements ICollector {
         this.source_url = source;
     }
 
-    getConstructedURL = (query: string, startIndex: number, maxResults: number) =>
-        `${(this.source_url)}?q=${query}&startIndex=${startIndex}&maxResults=${maxResults}`;
+    getConstructedURL = (startIndex: number, maxResults: number, query: string) => {
+        if (!query)
+            throw new Error('Query must be a non-empty string!');
 
-    transformBooks(items: any): IBook[] {
+        return `${(this.source_url)}?q=${query}&startIndex=${startIndex}&maxResults=${maxResults}`;
+    }
+
+    transformBooks(query: string, response: any): BookList {
         // TODO test to see if this JSON is legit
         // TODO go over items and transform each record according to the relevant type (BookGoogle for this one)
-        return [];
+        // TODO validate types in the response
+
+        const bookList: BookList = new BookList(query);
+        bookList.books = response.data['items'];
+        bookList.totalCount = response.data['totalItems'];
+
+        return bookList;
     }
 
-    getTotalBooks = (): number => {
-        // TODO extract 'totalItems' from JSON
-        return 0;
-    }
-
-    getId = (): string => {
-        // TODO extract 'id' from JSON
-        return null;
-    }
-
-    getTitle = (): string => {
-        // TODO extract 'volumeInfo/title' from JSON
-        return null;
-    }
-
-    getThumbnailLink = () => {
-        // TODO extract 'imageLinks/smallThumbnail' from JSON
-        return null;
+    getAllowedMaxResults(): number {
+        return MAX_ALLOWED_RESULTS;
     }
 }

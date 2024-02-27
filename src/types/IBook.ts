@@ -13,4 +13,19 @@ export default interface IBook {
             url: string;
         }
     }
+
+    /**
+     * Get the unique ID for this book (TODO is it really unique?)
+     */
+    getId(): string;
+
+    /**
+     * Get the title of the book
+     */
+    getTitle(): string;
+
+    /**
+     * Get the URL for displaying a thumbnail for the book
+     */
+    getThumbnailLink(): string;
 }

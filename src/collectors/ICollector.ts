@@ -1,9 +1,7 @@
 /**
  * This file will handle connection and storing of books
  */
-
-import axios from 'axios';
-import IBook from "../types/IBook";
+import {BookList} from "../types/BookList";
 
 export default interface ICollector {
     readonly source_url: string;
@@ -11,39 +9,25 @@ export default interface ICollector {
     // Globals
 
     // TODO different collectors can have different properties. This is the base properties, should allow extending
+
     /**
      *
-     * @param query
      * @param startIndex
      * @param maxResults
+     * @param query
      */
-    getConstructedURL(query: string, startIndex: number, maxResults: number): string;
+    getConstructedURL(startIndex: number, maxResults: number, query: string): string;
 
     /**
-     * // TODO create adapter per each collector to create the collection according to its book interface
-     * Extract only required data and transform it to a list of books by the collectors type
+     * Extract only required data from retrieved JSON and transform it to a list of books by the collectors type
      *
-     * @param items
+     * @param query TODO needed only for the purpose of displaying what we requested, should be moved 'outside'
+     * @param response
      */
-    transformBooks(items: any): IBook[];
+    transformBooks(query: string, response: any): BookList;
 
     /**
-     * Return the number of books that can be retrieved
+     *
      */
-    getTotalBooks(): number;
-
-    /**
-     * Get the unique ID for this book (TODO is it really unique?)
-     */
-    getId(): string;
-
-    /**
-     * Get the title of the book
-     */
-    getTitle(): string;
-
-    /**
-     * Get the URL for displaying a thumbnail for the book
-     */
-    getThumbnailLink(): string;
+    getAllowedMaxResults(): number;
 }
