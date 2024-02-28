@@ -4,7 +4,6 @@
  */
 import React from 'react';
 import IBook from "../types/IBook";
-import PropTypes from "prop-types";
 import './BookCatalog.css';
 
 
@@ -17,6 +16,7 @@ export const BookCatalog = ({books}) => {
                     <th>ID</th>
                     <th>Title</th>
                     <th>Cover</th>
+                    <th>Buy</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -29,22 +29,13 @@ export const BookCatalog = ({books}) => {
                                 <img src={book.volumeInfo.imageLinks.smallThumbnail} alt="Book cover"/>
                             ) : ""}
                         </td>
+                        <td className="checkbox-container">
+                            <input type="checkbox"/>
+                        </td>
                     </tr>
                 ))}
                 </tbody>
             </table>
         </div>
     );
-};
-
-BookCatalog.propTypes = {
-    books: PropTypes.arrayOf(PropTypes.shape({
-        id: PropTypes.string.isRequired,
-        volumeInfo: PropTypes.shape({
-            title: PropTypes.string.isRequired,
-            imageLinks: PropTypes.shape({
-                smallThumbnail: PropTypes.string,
-            }),
-        }),
-    })).isRequired
 };

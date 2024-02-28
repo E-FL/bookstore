@@ -1,11 +1,14 @@
 import React from "react";
 import './CatalogControls.css';
+import IBook from "../types/IBook";
 
 interface CatalogControlProps {
     query: string;
     total: number;
     rows: number;
     page: number;
+    selected: IBook[];
+    onPurchase: (bookList: IBook[]) => void;
     onUpdatePage: (page: number) => void;
     onUpdateRows: (rows: number) => void;
 }
@@ -41,6 +44,12 @@ export const CatalogControls: React.FC<CatalogControlProps> = (props) => {
                     onClick={() => props.onUpdatePage(props.page + 1)}
                     disabled={props.page >= Math.ceil(props.total / props.rows)}>
                     Next
+                </button>
+                <button
+                    className="catalog-controls-buttons"
+                    onClick={() => props.onPurchase(selected)}
+                    disabled={props.selected == null}>
+                    Purchase books
                 </button>
             </div>
         </div>

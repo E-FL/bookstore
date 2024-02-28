@@ -8,6 +8,7 @@ import {CatalogControls} from "./CatalogControls";
 export const BookStore = () => {
     const isLoadingRef = useRef<boolean>(false);
     const [bookList, setBookList] = useState<BookList>();
+    const [selectedBook, setSelectedBooks] = useState<string>();
     const [startIndex, setStartIndex] = useState<number>(0);
     const [maxResults, setMaxResults] = useState<number>(BooksAPI.DEFAULT_RESULTS_PER_PAGE);
 
@@ -60,9 +61,12 @@ export const BookStore = () => {
                 total={bookList.totalCount}
                 rows={maxResults}
                 page={currentPage}
+                selected={}
 
                 onUpdatePage={updatePage}
                 onUpdateRows={updateMaxResults}
+                onSelectBook={setSelectedBook}
+                onPurchase={}
             />
 
             <BookCatalog
