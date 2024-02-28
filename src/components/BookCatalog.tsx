@@ -5,9 +5,15 @@
 import React from 'react';
 import IBook from "../types/IBook";
 import './BookCatalog.css';
+import {BookList} from "../types/BookList";
 
+class BookCatalogProps {
+    bookList: BookList;
+    selected: BookList;
+    onSelect: (id: string, checked: boolean) => void;
+}
 
-export const BookCatalog = ({books, onSelect}) => {
+export const BookCatalog: React.FC<BookCatalogProps> = (props) => {
     return (
         <div className="book-catalog-table-wrapper">
             <table className="book-catalog-table">
@@ -20,7 +26,7 @@ export const BookCatalog = ({books, onSelect}) => {
                 </tr>
                 </thead>
                 <tbody>
-                {books.map((book: IBook) => (
+                {props.bookList.books.map((book: IBook) => (
                     <tr key={book.id}>
                         <td>{book.id}</td>
                         <td>{book.volumeInfo.title}</td>
@@ -32,7 +38,8 @@ export const BookCatalog = ({books, onSelect}) => {
                         <td className="checkbox-container">
                             <input
                                 type="checkbox"
-                                onChange={event => onSelect(book.id, event.target.checked)}
+                                onChange={event => props.onSelect(book.id, event.target.checked)}
+                                checked={props.selected?.getBook(book.id) != null}
                             />
                         </td>
                     </tr>

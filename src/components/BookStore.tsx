@@ -53,7 +53,9 @@ export const BookStore = () => {
     };
 
     const purchaseSelected = () => {
-        console.log('Purchase selected');
+        const selectedIds = selectedBooks.books.map(book => book.id);
+        console.log('Purchase selected books', selectedIds);
+        window.alert(`Purchase selected books:\n${selectedIds.join('\n')}`);
     }
 
     const updateSelectedBooks = (id: string, selected: boolean) => {
@@ -85,7 +87,8 @@ export const BookStore = () => {
             />
 
             <BookCatalog
-                books={bookList.books}
+                bookList={bookList}
+                selected={selectedBooks}
                 onSelect={updateSelectedBooks}
             />
         </div>
