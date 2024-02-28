@@ -38,7 +38,7 @@ export const BookStore = () => {
                 console.timeEnd('loadBooks');
             }
         }
-    }, [startIndex, maxResults, isLoading]);
+    }, [startIndex, maxResults]);
 
     if (!bookList)
         return null;
