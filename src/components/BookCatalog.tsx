@@ -7,7 +7,7 @@ import IBook from "../types/IBook";
 import './BookCatalog.css';
 
 
-export const BookCatalog = ({books}) => {
+export const BookCatalog = ({books, onSelect}) => {
     return (
         <div className="book-catalog-table-wrapper">
             <table className="book-catalog-table">
@@ -16,7 +16,7 @@ export const BookCatalog = ({books}) => {
                     <th>ID</th>
                     <th>Title</th>
                     <th>Cover</th>
-                    <th>Buy</th>
+                    <th>Select</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -30,7 +30,10 @@ export const BookCatalog = ({books}) => {
                             ) : ""}
                         </td>
                         <td className="checkbox-container">
-                            <input type="checkbox"/>
+                            <input
+                                type="checkbox"
+                                onChange={event => onSelect(book.id, event.target.checked)}
+                            />
                         </td>
                     </tr>
                 ))}

@@ -43,7 +43,7 @@ export class ControllerGoogle implements IController {
         // TODO go over items and transform each record according to the relevant type (BookGoogle for this one)
         // TODO validate types in the response
 
-        const bookList: BookList = existingBookList || new BookList();
+        const bookList: BookList = existingBookList || BookList.createFromQuery();
 
         // TODO test if it is a valid IBook contract
         if (Array.isArray(response.data.items))

@@ -8,7 +8,7 @@ import {CatalogControls} from "./CatalogControls";
 export const BookStore = () => {
     const isLoadingRef = useRef<boolean>(false);
     const [bookList, setBookList] = useState<BookList>();
-    const [selectedBook, setSelectedBooks] = useState<string>();
+    const [selectedBooks, setSelectedBooks] = useState<BookList>();
     const [startIndex, setStartIndex] = useState<number>(0);
     const [maxResults, setMaxResults] = useState<number>(BooksAPI.DEFAULT_RESULTS_PER_PAGE);
 
@@ -52,6 +52,22 @@ export const BookStore = () => {
         setStartIndex(0); // go back to first page... TODO need to do it when setting max results
     };
 
+    const purchaseSelected = () => {
+        console.log('Purchase selected');
+    }
+
+    const updateSelectedBooks = (id: string, selected: boolean) => {
+        console.log(`${selected ? 'Select' : 'Unselect'} ${id}`);
+
+        const newSelectedBooks = BookList.cloneBooks(selectedBooks);
+        const book = bookList.getBook(id);
+        if (book) {
+            selected ? newSelectedBooks.addBook(book) : newSelectedBooks.removeBook(id);
+        }
+
+        setSelectedBooks(newSelectedBooks);
+    }
+
     const currentPage = Math.floor(startIndex / maxResults) + 1;
 
     return (
@@ -61,16 +77,16 @@ export const BookStore = () => {
                 total={bookList.totalCount}
                 rows={maxResults}
                 page={currentPage}
-                selected={}
+                selected={selectedBooks}
 
                 onUpdatePage={updatePage}
                 onUpdateRows={updateMaxResults}
-                onSelectBook={setSelectedBook}
-                onPurchase={}
+                onPurchase={purchaseSelected}
             />
 
             <BookCatalog
                 books={bookList.books}
+                onSelect={updateSelectedBooks}
             />
         </div>
     )

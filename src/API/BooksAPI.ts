@@ -26,7 +26,7 @@ const fetchBooks = async (collector: IController,
                           query: string = DEFAULT_QUERY) => {
 
     const allowedMaxResults = collector.getAllowedMaxResults();
-    const bookList: BookList = new BookList(query);
+    const bookList: BookList = BookList.createFromQuery(query);
 
     let booksToFetch = maxResults;
     let currentStartIndex = startIndex;
