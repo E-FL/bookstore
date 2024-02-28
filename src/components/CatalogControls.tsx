@@ -1,6 +1,5 @@
 import React from "react";
 import './CatalogControls.css';
-import IBook from "../types/IBook";
 import {BookList} from "../types/BookList";
 
 interface CatalogControlProps {
