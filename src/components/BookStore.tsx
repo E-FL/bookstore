@@ -15,6 +15,7 @@ export const BookStore = () => {
     const [maxResults, setMaxResults] = useState<number>(BooksAPI.DEFAULT_RESULTS_PER_PAGE);
 
     // init books
+    // es-lint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {
         if (!isLoadingRef.current) {
             const loadBooks = async () => {
