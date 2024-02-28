@@ -1,12 +1,13 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {BookCatalog} from "./BookCatalog";
 import {BookList} from "../types/BookList";
 import {BooksAPI} from "../API/BooksAPI";
 import {ControllerGoogle} from "../controllers/ControllerGoogle";
 import {CatalogControls} from "./CatalogControls";
+import './BookStore.css';
 
 export const BookStore = () => {
-    const isLoadingRef = useRef<boolean>(false);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
     const [bookList, setBookList] = useState<BookList>();
     const [selectedBooks, setSelectedBooks] = useState<BookList>();
     const [startIndex, setStartIndex] = useState<number>(0);
@@ -14,10 +15,8 @@ export const BookStore = () => {
 
     // init books
     useEffect(() => {
-        // TODO should show 'Loading...' when isLoadingref.current is true
-
-        if (!isLoadingRef.current) {
-            isLoadingRef.current = true;
+        if (!isLoading) {
+            setIsLoading(true);
             const loadBooks = async () => {
                 const query = BooksAPI.DEFAULT_QUERY;
 
@@ -28,11 +27,13 @@ export const BookStore = () => {
 
             console.time('loadBooks');
             try {
-                console.debug('Before -> books loading...');
-                loadBooks().then(r => {
-                    isLoadingRef.current = false;
-                    console.debug('After -> books loaded.');
-                });
+                console.debug('Before -> Books loading...');
+                loadBooks()
+                    .catch(error => console.debug('After -> Failed loading books', error))
+                    .then(() => {
+                        setIsLoading(false);
+                        console.debug('After -> Books loaded.');
+                    });
             } finally {
                 console.timeEnd('loadBooks');
             }
@@ -74,6 +75,15 @@ export const BookStore = () => {
 
     return (
         <div>
+            {
+                isLoading && (
+                    <div className="loading-overlay">
+                        <div className="loading-modal">
+                            Loading...
+                        </div>
+                    </div>)
+            }
+
             <CatalogControls
                 query={bookList.query}
                 total={bookList.totalCount}
