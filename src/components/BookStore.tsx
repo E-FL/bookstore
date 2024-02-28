@@ -21,19 +21,20 @@ export const BookStore = () => {
                 const query = BooksAPI.DEFAULT_QUERY;
 
                 console.debug(`Calling to fetch books ${startIndex}-${startIndex + maxResults - 1} by querying "${query}"`);
-                const bookList: BookList = await BooksAPI.fetchBooks(new ControllerGoogle(), startIndex, maxResults, query);
-                setBookList(bookList);
+                try {
+                    const bookList: BookList = await BooksAPI.fetchBooks(new ControllerGoogle(), startIndex, maxResults, query);
+                    setBookList(bookList);
+                } catch (error) {
+                    console.debug('Failed loading books', error);
+                } finally {
+                    setIsLoading(false);
+                }
             }
 
             console.time('loadBooks');
             try {
                 console.debug('Before -> Books loading...');
-                loadBooks()
-                    .catch(error => console.debug('After -> Failed loading books', error))
-                    .then(() => {
-                        setIsLoading(false);
-                        console.debug('After -> Books loaded.');
-                    });
+                loadBooks().then(r => console.debug('After -> Finished loading books', r));
             } finally {
                 console.timeEnd('loadBooks');
             }
