@@ -42,7 +42,7 @@ const fetchBooks = async (collector: IController,
 
                 console.debug(` Books --> 
                 fetch=${booksToFetch} 
-                start index=${startIndex} 
+                start index=${currentStartIndex} 
                 Requested=${requestCount} 
                 received=${returnedCount} 
                 size=${bookList.books.length}`);
