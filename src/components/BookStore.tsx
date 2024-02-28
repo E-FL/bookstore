@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {BookCatalog} from "./BookCatalog";
 import {BookList} from "../types/BookList";
 import {BooksAPI} from "../API/BooksAPI";
@@ -7,22 +7,20 @@ import {CatalogControls} from "./CatalogControls";
 import './BookStore.css';
 
 export const BookStore = () => {
+    const isLoadingRef = useRef<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [bookList, setBookList] = useState<BookList>();
     const [selectedBooks, setSelectedBooks] = useState<BookList>();
     const [startIndex, setStartIndex] = useState<number>(0);
     const [maxResults, setMaxResults] = useState<number>(BooksAPI.DEFAULT_RESULTS_PER_PAGE);
 
-    // ??
-    useEffect(() => {
-        console.log('useEffect isLoading called', isLoading);
-    }, [isLoading]);
-
     // init books
     useEffect(() => {
-        if (!isLoading) {
-            setIsLoading(true);
+        if (!isLoadingRef.current) {
             const loadBooks = async () => {
+                isLoadingRef.current = true;
+                updateLoadingState();
+
                 const query = BooksAPI.DEFAULT_QUERY;
 
                 console.debug(`Calling to fetch books ${startIndex}-${startIndex + maxResults - 1} by querying "${query}"`);
@@ -32,7 +30,8 @@ export const BookStore = () => {
                 } catch (error) {
                     console.debug('Failed loading books', error);
                 } finally {
-                    setIsLoading(false);
+                    isLoadingRef.current = false;
+                    updateLoadingState();
                 }
             }
 
@@ -45,6 +44,10 @@ export const BookStore = () => {
             }
         }
     }, [startIndex, maxResults]);
+
+    const updateLoadingState = () => {
+        setIsLoading(isLoadingRef.current);
+    };
 
     if (!bookList)
         return null;
