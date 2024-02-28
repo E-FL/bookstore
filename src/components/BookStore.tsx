@@ -13,8 +13,12 @@ export const BookStore = () => {
     const [startIndex, setStartIndex] = useState<number>(0);
     const [maxResults, setMaxResults] = useState<number>(BooksAPI.DEFAULT_RESULTS_PER_PAGE);
 
+    // ??
+    useEffect(() => {
+        console.log('useEffect isLoading called', isLoading);
+    }, [isLoading]);
+
     // init books
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {
         if (!isLoading) {
             setIsLoading(true);
