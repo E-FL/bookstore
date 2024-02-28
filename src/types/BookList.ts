@@ -6,7 +6,7 @@ export class BookList {
     query?: string;
 
     isEmpty() {
-        return (this.books.length == 0);
+        return (this.books.length === 0);
     }
 
     private constructor(books: IBook[] = [], totalCount: number = 0, query?: string) {
@@ -24,7 +24,7 @@ export class BookList {
     }
 
     getBook(id: string) {
-        return this.books.find(book => book.id == id);
+        return this.books.find(book => book.id === id);
     }
 
     addBook(book: IBook) {
