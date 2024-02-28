@@ -7,10 +7,11 @@ export default interface IBook {
     volumeInfo: {
         title: string;
         imageLinks?: {
-            thumbnail: string;
+            smallThumbnail: string | undefined;
+            thumbnail: string | undefined; // not used
         }
         previewLink?: {
-            url: string;
+            url: string; // not used
         }
     }
 

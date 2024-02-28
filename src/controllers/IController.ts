@@ -3,7 +3,7 @@
  */
 import {BookList} from "../types/BookList";
 
-export default interface ICollector {
+export default interface IController {
     readonly source_url: string;
 
     // Globals
@@ -21,10 +21,10 @@ export default interface ICollector {
     /**
      * Extract only required data from retrieved JSON and transform it to a list of books by the collectors type
      *
-     * @param query TODO needed only for the purpose of displaying what we requested, should be moved 'outside'
      * @param response
+     * @param existingBookList
      */
-    transformBooks(query: string, response: any): BookList;
+    transformBooks(response: any, existingBookList: BookList): BookList;
 
     /**
      *

@@ -1,0 +1,25 @@
+.book-catalog-table-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.book-catalog-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.book-catalog-table th,
+.book-catalog-table td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+}
+
+.book-catalog-table td img {
+    display: block;
+    margin: auto;
+    max-width: 100%;
+    height: auto;
+}

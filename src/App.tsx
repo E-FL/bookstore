@@ -1,10 +1,12 @@
 import React from 'react';
 import './App.css';
-import BookCatalog from "./components/BookCatalog";
+import {BookStore} from "./components/BookStore";
 function App() {
     return (
         <div>
-            <BookCatalog />
+            <h2>Welcome to my store</h2>
+            <hr />
+            <BookStore />
         </div>
     );
 }
