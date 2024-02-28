@@ -1,0 +1,33 @@
+/* CatalogControls.css */
+.catalog-controls-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding: 10px;
+}
+
+.catalog-controls-header {
+    margin-right: 20px;
+}
+
+.catalog-controls-wrapper {
+    display: flex;
+    gap: 10px;
+}
+
+.catalog-controls-buttons {
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+}
+
+.catalog-controls-buttons:disabled {
+    background-color: #e7e7e7;
+    cursor: not-allowed;
+}
+
+.catalog-controls-select {
+    border: 1px solid #ccc;
+    cursor: pointer;
+}
