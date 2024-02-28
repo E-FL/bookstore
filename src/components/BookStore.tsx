@@ -14,6 +14,7 @@ export const BookStore = () => {
     const [maxResults, setMaxResults] = useState<number>(BooksAPI.DEFAULT_RESULTS_PER_PAGE);
 
     // init books
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {
         if (!isLoading) {
             setIsLoading(true);
